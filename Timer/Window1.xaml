@@ -1,0 +1,26 @@
+﻿<Window x:Class="Timer.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Timer"
+        mc:Ignorable="d"
+        Title="飘窗" Height="260" Width="298"
+        WindowStyle="None"  AllowsTransparency="True" Background="#00000000" Topmost="True"
+        IsHitTestVisible="True" x:Name="window1" Top="125" Left="80" FontWeight="Bold" 
+        >
+    <Grid>
+        <Label IsHitTestVisible="False" Name="Top" Content="就绪" HorizontalAlignment="Left" Margin="80,40,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" Name="Jug" Content="就绪" HorizontalAlignment="Left" Margin="80,76,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" Name="Mid" Content="就绪" HorizontalAlignment="Left" Margin="80,112,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" Name="Bot" Content="就绪" HorizontalAlignment="Left" Margin="80,148,0,0" VerticalAlignment="Top" Background="#4CFF0000" FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" Name="Sup" Content="就绪" HorizontalAlignment="Left" Margin="80,184,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" x:Name="Top_Copy" Content="上单" HorizontalAlignment="Left" Margin="34,40,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" x:Name="Jug_Copy" Content="打野" HorizontalAlignment="Left" Margin="34,76,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" x:Name="Mid_Copy" Content="中单" HorizontalAlignment="Left" Margin="34,112,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" x:Name="Bot_Copy" Content="下路" HorizontalAlignment="Left" Margin="34,148,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+        <Label IsHitTestVisible="False" x:Name="Sup_Copy" Content="辅佐" HorizontalAlignment="Left" Margin="34,184,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
+        <Label IsHitTestVisible="False" x:Name="Game" Content="0:00" HorizontalAlignment="Left" Margin="80,3,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
+        <Label IsHitTestVisible="False" x:Name="Top_Copy2" Content="游戏" HorizontalAlignment="Left" Margin="34,3,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
+    </Grid>
+</Window>
