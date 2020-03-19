@@ -30,11 +30,8 @@ namespace Timer
         System.EventHandler delegateinstance;
         public MainWindow()
         {
-            data = parser.ReadFile("conf.ini");
+
             InitializeComponent();
-            Switch(null, null);
-            delegateinstance = new System.EventHandler(WindowEditFun);
-            hook_Main.OnKeyDown += new System.Windows.Forms.KeyEventHandler(Hook_MainKeyDown);
             //获取当前活动进程的模块名称
             string moduleName = Process.GetCurrentProcess().MainModule.ModuleName;
             //返回指定路径字符串的文件名
@@ -48,6 +45,10 @@ namespace Timer
                 this.Close();//关闭当前窗体
                 return;
             }
+            data = parser.ReadFile("conf.ini");
+            delegateinstance = new System.EventHandler(WindowEditFun);
+            hook_Main.OnKeyDown += new System.Windows.Forms.KeyEventHandler(Hook_MainKeyDown);
+            Switch(null, null);
             GameButton_Click(new object(), new RoutedEventArgs());
             try
             {
@@ -107,17 +108,19 @@ namespace Timer
             {
                 WindowEdit.Visibility = Visibility.Hidden;
                 flowWindow.Hide();
+                if (e == null) chkSwitch.IsChecked = false;
             }
             else
             {
                 if (!flowWindow.IsLoaded)
                 {
+                    flowWindow.Close();
                     flowWindow = new Window1() { Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) };
                 }
                 WindowEdit.Visibility = Visibility.Visible;
                 flowWindow.Show();
+                if (e == null) chkSwitch.IsChecked = true;
             }
-            if (e == null) { chkSwitch.IsChecked = (bool)chkSwitch.IsChecked ? false:true; }
         }
         private string ChangeTimeContent(long StartTime, bool IsChecked)
         {
@@ -375,7 +378,6 @@ namespace Timer
             {
                 flowWindow.Close();
                 if (timer != null) { timer.Stop(); }
-
                 this.hook_Main.UnInstallHook();
                 //获取当前活动进程的模块名称
                 string moduleName = Process.GetCurrentProcess().MainModule.ModuleName;
