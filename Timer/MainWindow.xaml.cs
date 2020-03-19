@@ -20,14 +20,18 @@ namespace Timer
         long BotStartTime;
         long SupStartTime;
         long GameStartTime;
+        bool editflag=false;
         IniData data;
         Window1 flowWindow = new Window1();
         private Hocy_Hook hook_Main = new Hocy_Hook();
         DispatcherTimer timer;
         FileIniDataParser parser = new FileIniDataParser();
+
+        System.EventHandler delegateinstance ;
         public MainWindow()
         {
             InitializeComponent();
+            delegateinstance = new System.EventHandler(WindowEditFun);
             data = parser.ReadFile("conf.ini");
             hook_Main.OnKeyDown += new System.Windows.Forms.KeyEventHandler(hook_MainKeyDown);
             //获取当前活动进程的模块名称
@@ -44,6 +48,8 @@ namespace Timer
                 return;
             }
             GameButton_Click(new object(), new RoutedEventArgs());
+            flowWindow.Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]);
+            flowWindow.Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]);
             flowWindow.Show();
             try
             {
@@ -99,11 +105,17 @@ namespace Timer
         {
             if (flowWindow.IsVisible)
             {
-                flowWindow.Close();
+                WindowEdit.Visibility = Visibility.Hidden;
+                flowWindow.Hide();
             }
             else
             {
-                flowWindow = new Window1();
+                if (!flowWindow.IsLoaded)
+                {
+                    flowWindow = new Window1() {  Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) };
+                }
+
+                WindowEdit.Visibility = Visibility.Visible;
                 flowWindow.Show();
             }
         }
@@ -137,7 +149,7 @@ namespace Timer
             {
                 Top.Content = time + "秒（" + content + "）";
             }
-            flowWindow.Top.Content = Top.Content;
+            flowWindow.TopTime.Content = Top.Content;
         }
 
 
@@ -178,7 +190,7 @@ namespace Timer
             {
                 Jug.Content = time + "秒（" + content + "）";
             }
-            flowWindow.Jug.Content = Jug.Content;
+            flowWindow.JugTime.Content = Jug.Content;
         }
 
         private void JugAdd_Click(object sender, RoutedEventArgs e)
@@ -218,7 +230,7 @@ namespace Timer
             {
                 Mid.Content = time + "秒（" + content + "）";
             }
-            flowWindow.Mid.Content = Mid.Content;
+            flowWindow.MidTime.Content = Mid.Content;
         }
 
         private void MidAdd_Click(object sender, RoutedEventArgs e)
@@ -258,7 +270,7 @@ namespace Timer
             {
                 Bot.Content = time + "秒（" + content + "）";
             }
-            flowWindow.Bot.Content = Bot.Content;
+            flowWindow.BotTime.Content = Bot.Content;
         }
 
         private void BotAdd_Click(object sender, RoutedEventArgs e)
@@ -297,7 +309,7 @@ namespace Timer
             {
                 Sup.Content = time + "秒（" + content + "）";
             }
-            flowWindow.Sup.Content = Sup.Content;
+            flowWindow.SupTime.Content = Sup.Content;
         }
 
         private void SupAdd_Click(object sender, RoutedEventArgs e)
@@ -369,5 +381,35 @@ namespace Timer
                 MessageBox.Show(e2.Message, "error code:2");
             }
         }
+
+        private void WindowEdit_Click(object sender, RoutedEventArgs e)
+        {
+            editflag = true;
+            WindowEditFun(null, null);
+            editflag = false;
+        }
+        private void WindowEditFun(object sender, EventArgs e)
+        {
+            const double leftOffset = 8;
+            const double topOffset = 31;
+            if (flowWindow.AllowsTransparency && editflag && flowWindow.IsLoaded)//编辑模式
+                {
+                    flowWindow.Close();
+                    flowWindow = new Window1() { AllowsTransparency = false, WindowStyle = WindowStyle.SingleBorderWindow, Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]) - topOffset, Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) - leftOffset };
+                    flowWindow.Closed += delegateinstance;
+                    flowWindow.Show();
+            }
+            else if (!flowWindow.AllowsTransparency)
+            {
+                data["FlowWindow"]["FlowWindowTop"] = (flowWindow.Top + topOffset).ToString();
+                data["FlowWindow"]["FlowWindowLeft"] = (flowWindow.Left + leftOffset).ToString();
+                parser.WriteFile("conf.ini", data);
+                flowWindow.Closed -= delegateinstance;
+                flowWindow.Close();
+                flowWindow = new Window1() { AllowsTransparency = true, WindowStyle = WindowStyle.None, Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) };
+                flowWindow.Show();
+            }
+        }
     }
+
 }

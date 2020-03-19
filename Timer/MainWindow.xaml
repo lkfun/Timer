@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Timer"
         mc:Ignorable="d"
-        Title="迷之工具箱" Height="335.5" Width="400.501" FontFamily="Consolas,Microsoft YaHei UI"  FontSize="12
+        Title="迷之工具箱" Height="361" Width="416.501" FontFamily="Consolas,Microsoft YaHei UI"  FontSize="12
         " ResizeMode="CanMinimize" Closed="Window_Closed" x:Name="mainwindow">
     <Grid>
         <TabControl Margin="10">
             <TabItem Header="闪现计时器">
-                <Grid AllowDrop="True" Height="255" VerticalAlignment="Top" HorizontalAlignment="Left" Width="353" >
+                <Grid AllowDrop="True" Margin="0,-6,0,12" HorizontalAlignment="Left" Width="367" >
 
                     <Label Name="Top" Content="就绪" HorizontalAlignment="Left" Margin="90,43,0,0" VerticalAlignment="Top" Height="23" Width="92"/>
                     <Button Name="TopButton" Content="上路" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="75" Click="TopButton_Click" Height="23"/>
@@ -42,7 +42,7 @@
                     <CheckBox Name="BotBoot" Content="明朗鞋" HorizontalAlignment="Left" Margin="294,134,0,0" VerticalAlignment="Top" Height="18" RenderTransformOrigin="0.518,0.806"/>
 
                     <Label Name="Sup" Content="就绪" HorizontalAlignment="Left" Margin="90,157,0,0" VerticalAlignment="Top" Height="24" Width="92"/>
-                    <Button Name="SupButton" Content="辅佐" HorizontalAlignment="Left" Margin="10,157,0,0" VerticalAlignment="Top" Width="75" Click="SupButton_Click" Height="24"/>
+                    <Button Name="SupButton" Content="辅助" HorizontalAlignment="Left" Margin="10,157,0,0" VerticalAlignment="Top" Width="75" Click="SupButton_Click" Height="24"/>
                     <Button Name="SupAdd" Content="+" HorizontalAlignment="Left" Margin="187,157,0,0" VerticalAlignment="Top" Width="23" Height="24" Click="SupAdd_Click"/>
                     <Button Name="SupClear" Content="归零" HorizontalAlignment="Left" Margin="243,157,0,0" VerticalAlignment="Top" Width="36" Height="24" Click="SupClear_Click"/>
                     <Button Name="SupSubtract" Content="-" HorizontalAlignment="Left" Margin="215,157,0,0" VerticalAlignment="Top" Width="23" Height="24" Click="SupSubtract_Click"/>
@@ -52,10 +52,12 @@
                     <Button x:Name="GameButton" Content="游戏开始" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="75" Click="GameButton_Click" Height="23"/>
                     <Button x:Name="GameAdd" Content="+" HorizontalAlignment="Left" Margin="187,14,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="GameAdd_Click"/>
                     <Button x:Name="GameSubtract" Content="-" HorizontalAlignment="Left" Margin="215,14,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="GameSubtract_Click"/>
-                    <Label Content="小键盘默认快捷键：&#xA;. 重置&#x9;+ 时长&#x9;- 时长&#x9;0 开启/关闭浮窗&#x9;&#xA;F1 上路&#x9;F2 打野&#x9;F3 中路&#x9;F4下路&#x9;F5 辅助" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Width="333"/>
-
+                    <Label Content="小键盘默认快捷键：&#xA;. 重置&#x9;+ 时长&#x9;- 时长&#x9;0 开启/关闭浮窗&#x9;&#xA;F1 上路&#x9;F2 打野&#x9;F3 中路&#x9;F4下路&#x9;F5 辅助" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="333"/>
+                    <Button Name="WindowEdit" Content="位置编辑" HorizontalAlignment="Left" Margin="59,190,0,0" VerticalAlignment="Top" Width="66" Height="23" ToolTip="编辑弹窗位置" Click="WindowEdit_Click" />
+                    <CheckBox Content="弹窗" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Click="Switch" IsChecked="True"/>
                 </Grid>
             </TabItem>
         </TabControl>
+
     </Grid>
 </Window>
