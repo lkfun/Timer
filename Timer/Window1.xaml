@@ -10,14 +10,14 @@
         IsHitTestVisible="True" x:Name="window1" FontWeight="Bold" 
         >
     <Grid>
-        <Label IsHitTestVisible="False" Name="TopTime" Content="就绪" HorizontalAlignment="Left" Margin="46,34,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" Width="48"/>
-        <Label IsHitTestVisible="False" Name="JugTime" Content="就绪" HorizontalAlignment="Left" Margin="46,67,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" Width="48"/>
-        <Label IsHitTestVisible="False" Name="MidTime" Content="就绪" HorizontalAlignment="Left" Margin="46,100,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" RenderTransformOrigin="0.511,0.03" Width="48"/>
-        <Label IsHitTestVisible="False" Name="BotTime" Content="就绪" HorizontalAlignment="Left" Margin="46,133,0,0" VerticalAlignment="Top" Background="#4CFF0000" FontSize="18" Foreground="Yellow" Width="48"/>
-        <Label IsHitTestVisible="False" Name="SupTime" Content="就绪" HorizontalAlignment="Left" Margin="46,166,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" Width="48"/>
+        <Label IsHitTestVisible="False" Name="TopTime" Content="就绪" HorizontalAlignment="Left" Margin="46,34,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
+        <Label IsHitTestVisible="False" Name="JugTime" Content="就绪" HorizontalAlignment="Left" Margin="46,67,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
+        <Label IsHitTestVisible="False" Name="MidTime" Content="就绪" HorizontalAlignment="Left" Margin="46,100,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
+        <Label IsHitTestVisible="False" Name="BotTime" Content="就绪" HorizontalAlignment="Left" Margin="46,133,0,0" VerticalAlignment="Top" Background="#4CFF0000" FontSize="18" Foreground="Yellow" />
+        <Label IsHitTestVisible="False" Name="SupTime" Content="就绪" HorizontalAlignment="Left" Margin="46,166,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
         <Label IsHitTestVisible="False" x:Name="Top_Copy" Content="上单" HorizontalAlignment="Left" Margin="0,34,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
         <Label IsHitTestVisible="False" x:Name="Jug_Copy" Content="打野" HorizontalAlignment="Left" Margin="0,67,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
-        <Label IsHitTestVisible="False" x:Name="Mid_Copy" Content="中单" HorizontalAlignment="Left" Margin="0,100,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" RenderTransformOrigin="0.489,0"/>
+        <Label IsHitTestVisible="False" x:Name="Mid_Copy" Content="中单" HorizontalAlignment="Left" Margin="0,100,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
         <Label IsHitTestVisible="False" x:Name="Bot_Copy" Content="下路" HorizontalAlignment="Left" Margin="0,133,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow"/>
         <Label IsHitTestVisible="False" x:Name="Sup_Copy" Content="辅佐" HorizontalAlignment="Left" Margin="0,166,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
         <Label IsHitTestVisible="False" x:Name="Game" Content="0:00" HorizontalAlignment="Left" Margin="46,1,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
