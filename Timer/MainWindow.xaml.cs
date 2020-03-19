@@ -20,14 +20,14 @@ namespace Timer
         long BotStartTime;
         long SupStartTime;
         long GameStartTime;
-        bool editflag=false;
+        bool editflag = false;
         IniData data;
         Window1 flowWindow = new Window1();
         private Hocy_Hook hook_Main = new Hocy_Hook();
         DispatcherTimer timer;
         FileIniDataParser parser = new FileIniDataParser();
 
-        System.EventHandler delegateinstance ;
+        System.EventHandler delegateinstance;
         public MainWindow()
         {
             InitializeComponent();
@@ -112,7 +112,7 @@ namespace Timer
             {
                 if (!flowWindow.IsLoaded)
                 {
-                    flowWindow = new Window1() {  Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) };
+                    flowWindow = new Window1() { Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) };
                 }
 
                 WindowEdit.Visibility = Visibility.Visible;
@@ -393,11 +393,11 @@ namespace Timer
             const double leftOffset = 8;
             const double topOffset = 31;
             if (flowWindow.AllowsTransparency && editflag && flowWindow.IsLoaded)//编辑模式
-                {
-                    flowWindow.Close();
-                    flowWindow = new Window1() { AllowsTransparency = false, WindowStyle = WindowStyle.SingleBorderWindow, Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]) - topOffset, Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) - leftOffset };
-                    flowWindow.Closed += delegateinstance;
-                    flowWindow.Show();
+            {
+                flowWindow.Close();
+                flowWindow = new Window1() { AllowsTransparency = false, WindowStyle = WindowStyle.SingleBorderWindow, Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]) - topOffset, Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) - leftOffset };
+                flowWindow.Closed += delegateinstance;
+                flowWindow.Show();
             }
             else if (!flowWindow.AllowsTransparency)
             {
