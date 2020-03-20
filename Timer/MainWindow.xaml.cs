@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Threading;
 using IniParser;
 using IniParser.Model;
+using Timer;
 
 namespace Timer
 {
@@ -13,20 +14,14 @@ namespace Timer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int V = 5000;
-        long TopStartTime;
-        long JugStartTime;
-        long MidStartTime;
-        long BotStartTime;
-        long SupStartTime;
-        long GameStartTime;
+        long TopStartTime, JugStartTime, MidStartTime, BotStartTime, SupStartTime, GameStartTime;
+        DispatcherTimer TopTimer, JugTimer, MidTimer, BotTimer, SupTimer, GameTimer;
         bool editflag = false;
         IniData data;
+        private const int FiveSecond = 5000;
         Window1 flowWindow = new Window1();
         private Hocy_Hook hook_Main = new Hocy_Hook();
-        DispatcherTimer timer;
         FileIniDataParser parser = new FileIniDataParser();
-
         System.EventHandler delegateinstance;
         public MainWindow()
         {
@@ -51,9 +46,10 @@ namespace Timer
             GameButton_Click(new object(), new RoutedEventArgs());
             try
             {
-                bool flag=hook_Main.InstallHook("1");
-                if (!flag) {
-                    MessageBox.Show ( "热键注册失败 error code:3", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                bool flag = hook_Main.InstallHook("1");
+                if (!flag)
+                {
+                    MessageBox.Show("热键注册失败 error code:3", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 }
             }
             catch (Exception e)
@@ -112,57 +108,44 @@ namespace Timer
             {
                 if (!flowWindow.IsLoaded)
                 {
+                    flowWindow.Close();
                     flowWindow = new Window1() { Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) };
                 }
                 WindowEdit.Visibility = Visibility.Visible;
                 flowWindow.Show();
             }
-            if (e == null) { chkSwitch.IsChecked = (bool)chkSwitch.IsChecked ? false:true; }
+            if (e == null) { chkSwitch.IsChecked = (bool)chkSwitch.IsChecked ? false : true; }
         }
-        private string ChangeTimeContent(long StartTime, bool IsChecked)
-        {
-            long timespan = ((StartTime - GameStartTime) / 1000) + (IsChecked ? 270 : 300);
-            string content = (timespan / 60).ToString().PadLeft(2, '0') + ":" + (timespan % 60).ToString().PadLeft(2, '0');
-            return content;
-        }
+
 
 
         /*上单模板 开始*/
         private void TopButton_Click(object sender, RoutedEventArgs e)
         {
-            timer = new DispatcherTimer
+            TopTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
             };
             TopStartTime = Environment.TickCount;
-            timer.Tick += Toptimer_Tick;
-            timer.IsEnabled = true;
+            TopTimer.Tick += Toptimer_Tick;
+            TopTimer.IsEnabled = true;
         }
 
         private void Toptimer_Tick(object sender, EventArgs e)
         {
-            long time = ((bool)TopBoot.IsChecked ? 270 : 300) - ((Environment.TickCount - TopStartTime) / 1000);
-            string content = ChangeTimeContent(TopStartTime, (bool)TopBoot.IsChecked);
-            if (time <= 0)
-            {
-                Top.Content = "就绪";
-            }
-            else
-            {
-                Top.Content = time + "秒（" + content + "）";
-            }
+            Top.Content = TimerUtil.ChangeTimeContent(TopStartTime, GameStartTime, (bool)TopBoot.IsChecked, (bool)TopStar.IsChecked);
             flowWindow.TopTime.Content = Top.Content;
         }
 
 
         private void TopAdd_Click(object sender, RoutedEventArgs e)
         {
-            TopStartTime += V;
+            TopStartTime += FiveSecond;
         }
 
         private void TopSubtract_Click(object sender, RoutedEventArgs e)
         {
-            TopStartTime -= V;
+            TopStartTime -= FiveSecond;
         }
 
         private void TopClear_Click(object sender, RoutedEventArgs e)
@@ -173,38 +156,29 @@ namespace Timer
         /*上单模板 结束*/
         private void JugButton_Click(object sender, RoutedEventArgs e)
         {
-            timer = new DispatcherTimer
+            JugTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
             };
-            timer.Tick += Jugtimer_Tick;
-            timer.IsEnabled = true;
+            JugTimer.Tick += Jugtimer_Tick;
+            JugTimer.IsEnabled = true;
             JugStartTime = Environment.TickCount;
         }
 
         private void Jugtimer_Tick(object sender, EventArgs e)
         {
-            long time = (((bool)JugBoot.IsChecked ? 270 : 300) - (Environment.TickCount - JugStartTime) / 1000);
-            string content = ChangeTimeContent(JugStartTime, (bool)JugBoot.IsChecked);
-            if (time <= 0)
-            {
-                Jug.Content = "就绪";
-            }
-            else
-            {
-                Jug.Content = time + "秒（" + content + "）";
-            }
+            Jug.Content = TimerUtil.ChangeTimeContent(JugStartTime, GameStartTime, (bool)JugBoot.IsChecked, (bool)JugStar.IsChecked);
             flowWindow.JugTime.Content = Jug.Content;
         }
 
         private void JugAdd_Click(object sender, RoutedEventArgs e)
         {
-            JugStartTime += V;
+            JugStartTime += FiveSecond;
         }
 
         private void JugSubtract_Click(object sender, RoutedEventArgs e)
         {
-            JugStartTime -= V;
+            JugStartTime -= FiveSecond;
         }
 
         private void JugClear_Click(object sender, RoutedEventArgs e)
@@ -215,38 +189,29 @@ namespace Timer
 
         private void MidButton_Click(object sender, RoutedEventArgs e)
         {
-            timer = new DispatcherTimer
+            MidTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
             };
             MidStartTime = Environment.TickCount;
-            timer.Tick += Midtimer_Tick;
-            timer.IsEnabled = true;
+            MidTimer.Tick += Midtimer_Tick;
+            MidTimer.IsEnabled = true;
         }
 
         private void Midtimer_Tick(object sender, EventArgs e)
         {
-            long time = (((bool)MidBoot.IsChecked ? 270 : 300) - (Environment.TickCount - MidStartTime) / 1000);
-            string content = ChangeTimeContent(MidStartTime, (bool)MidBoot.IsChecked);
-            if (time <= 0)
-            {
-                Mid.Content = "就绪";
-            }
-            else
-            {
-                Mid.Content = time + "秒（" + content + "）";
-            }
+            Mid.Content = TimerUtil.ChangeTimeContent(MidStartTime, GameStartTime, (bool)MidBoot.IsChecked, (bool)MidStar.IsChecked);
             flowWindow.MidTime.Content = Mid.Content;
         }
 
         private void MidAdd_Click(object sender, RoutedEventArgs e)
         {
-            MidStartTime += V;
+            MidStartTime += FiveSecond;
         }
 
         private void MidSubtract_Click(object sender, RoutedEventArgs e)
         {
-            MidStartTime -= V;
+            MidStartTime -= FiveSecond;
         }
 
         private void MidClear_Click(object sender, RoutedEventArgs e)
@@ -257,38 +222,29 @@ namespace Timer
 
         private void BotButton_Click(object sender, RoutedEventArgs e)
         {
-            timer = new DispatcherTimer
+            BotTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
             };
             BotStartTime = Environment.TickCount;
-            timer.Tick += Bottimer_Tick;
-            timer.IsEnabled = true;
+            BotTimer.Tick += Bottimer_Tick;
+            BotTimer.IsEnabled = true;
         }
 
         private void Bottimer_Tick(object sender, EventArgs e)
         {
-            long time = (((bool)BotBoot.IsChecked ? 270 : 300) - (Environment.TickCount - BotStartTime) / 1000);
-            string content = ChangeTimeContent(BotStartTime, (bool)BotBoot.IsChecked);
-            if (time <= 0)
-            {
-                Bot.Content = "就绪";
-            }
-            else
-            {
-                Bot.Content = time + "秒（" + content + "）";
-            }
+            Bot.Content = TimerUtil.ChangeTimeContent(BotStartTime, GameStartTime, (bool)BotBoot.IsChecked, (bool)BotStar.IsChecked);
             flowWindow.BotTime.Content = Bot.Content;
         }
 
         private void BotAdd_Click(object sender, RoutedEventArgs e)
         {
-            BotStartTime += V;
+            BotStartTime += FiveSecond;
         }
 
         private void BotSubtract_Click(object sender, RoutedEventArgs e)
         {
-            BotStartTime -= V;
+            BotStartTime -= FiveSecond;
         }
 
         private void BotClear_Click(object sender, RoutedEventArgs e)
@@ -298,38 +254,29 @@ namespace Timer
 
         private void SupButton_Click(object sender, RoutedEventArgs e)
         {
-            timer = new DispatcherTimer
+            SupTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
             };
             SupStartTime = Environment.TickCount;
-            timer.Tick += Suptimer_Tick;
-            timer.IsEnabled = true;
+            SupTimer.Tick += Suptimer_Tick;
+            SupTimer.IsEnabled = true;
         }
 
         private void Suptimer_Tick(object sender, EventArgs e)
         {
-            long time = ((bool)SupBoot.IsChecked ? 270 : 300) - (Environment.TickCount - SupStartTime) / 1000;
-            string content = ChangeTimeContent(SupStartTime, (bool)SupBoot.IsChecked);
-            if (time <= 0)
-            {
-                Sup.Content = "就绪";
-            }
-            else
-            {
-                Sup.Content = time + "秒（" + content + "）";
-            }
+            Sup.Content = TimerUtil.ChangeTimeContent(SupStartTime, GameStartTime, (bool)SupBoot.IsChecked, (bool)SupStar.IsChecked);
             flowWindow.SupTime.Content = Sup.Content;
         }
 
         private void SupAdd_Click(object sender, RoutedEventArgs e)
         {
-            SupStartTime += V;
+            SupStartTime += FiveSecond;
         }
 
         private void SupSubtract_Click(object sender, RoutedEventArgs e)
         {
-            SupStartTime -= V;
+            SupStartTime -= FiveSecond;
         }
 
         private void SupClear_Click(object sender, RoutedEventArgs e)
@@ -339,18 +286,14 @@ namespace Timer
 
         private void GameButton_Click(object sender, RoutedEventArgs e)
         {
-            TopStartTime = 0;
-            JugStartTime = 0;
-            MidStartTime = 0;
-            BotStartTime = 0;
-            SupStartTime = 0;
-            timer = new DispatcherTimer
+            TopStartTime = JugStartTime = MidStartTime = BotStartTime = SupStartTime = 0;
+            GameTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
             };
             GameStartTime = Environment.TickCount;
-            timer.Tick += Gametimer_Tick;
-            timer.IsEnabled = true;
+            GameTimer.Tick += Gametimer_Tick;
+            GameTimer.IsEnabled = true;
         }
 
         private void Gametimer_Tick(object sender, EventArgs e)
@@ -361,12 +304,12 @@ namespace Timer
 
         private void GameAdd_Click(object sender, RoutedEventArgs e)
         {
-            GameStartTime -= V;
+            GameStartTime -= FiveSecond;
         }
 
         private void GameSubtract_Click(object sender, RoutedEventArgs e)
         {
-            GameStartTime += V;
+            GameStartTime += FiveSecond;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -374,8 +317,12 @@ namespace Timer
             try
             {
                 flowWindow.Close();
-                if (timer != null) { timer.Stop(); }
-
+                if (TopTimer != null) { TopTimer.Stop(); }
+                if (JugTimer != null) { JugTimer.Stop(); }
+                if (MidTimer != null) { MidTimer.Stop(); }
+                if (BotTimer != null) { BotTimer.Stop(); }
+                if (SupTimer != null) { SupTimer.Stop(); }
+                if (GameTimer != null) { GameTimer.Stop(); }
                 this.hook_Main.UnInstallHook();
                 //获取当前活动进程的模块名称
                 string moduleName = Process.GetCurrentProcess().MainModule.ModuleName;
@@ -422,6 +369,7 @@ namespace Timer
                 flowWindow.Show();
             }
         }
+
     }
 
 }

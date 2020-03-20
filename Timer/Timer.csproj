@@ -86,6 +86,7 @@
     </ApplicationDefinition>
     <Compile Include="Hocy_Hook.cs" />
     <Compile Include="public_variable.cs" />
+    <Compile Include="TimerUtil.cs" />
     <Compile Include="WIN32API.cs" />
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
