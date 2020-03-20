@@ -29,5 +29,6 @@ namespace Timer
         [DllImport("user32", EntryPoint = "GetWindowLong")]
         private static extern uint GetWindowLong(IntPtr hwnd, int nIndex);
 
+
     }
 }

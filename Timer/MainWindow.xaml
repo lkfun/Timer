@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Timer"
         mc:Ignorable="d"
-        Title="迷之工具箱" Height="361" Width="416.501" FontFamily="Consolas,Microsoft YaHei UI"  FontSize="12
+        Title="迷之工具箱" Height="361" Width="517.501" FontFamily="Consolas,Microsoft YaHei UI"  FontSize="12
         " ResizeMode="CanMinimize" Closed="Window_Closed" x:Name="mainwindow">
     <Grid>
         <TabControl Margin="10">
             <TabItem Header="闪现计时器">
-                <Grid AllowDrop="True" Margin="0,-6,0,12" HorizontalAlignment="Left" Width="367" >
+                <Grid AllowDrop="True" Margin="0,-6,1,12" >
 
                     <Label Name="Top" Content="就绪" HorizontalAlignment="Left" Margin="90,43,0,0" VerticalAlignment="Top" Height="23" Width="92"/>
                     <Button Name="TopButton" Content="上路" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="75" Click="TopButton_Click" Height="23"/>
@@ -18,6 +18,7 @@
                     <Button Name="TopClear" Content="归零" HorizontalAlignment="Left" Margin="243,43,0,0" VerticalAlignment="Top" Width="36" Height="23" Click="TopClear_Click"/>
                     <Button Name="TopSubtract" Content="-" HorizontalAlignment="Left" Margin="215,43,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="TopSubtract_Click"/>
                     <CheckBox Name="TopBoot" Content="明朗鞋" HorizontalAlignment="Left" Margin="294,48,0,0" VerticalAlignment="Top" Height="18"/>
+                    <CheckBox Name="TopStar" Content="星界" Margin="355,48,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>
 
 
                     <Label Name="Jug" Content="就绪" HorizontalAlignment="Left" Margin="90,72,0,0" VerticalAlignment="Top" Height="23" Width="92"/>
@@ -55,6 +56,10 @@
                     <Label Content="小键盘默认快捷键：&#xA;. 重置&#x9;+ 时长&#x9;- 时长&#x9;0 开启/关闭浮窗&#x9;&#xA;F1 上路&#x9;F2 打野&#x9;F3 中路&#x9;F4下路&#x9;F5 辅助" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="333"/>
                     <Button Name="WindowEdit" Content="位置编辑" HorizontalAlignment="Left" Margin="59,190,0,0" VerticalAlignment="Top" Width="66" Height="23" ToolTip="编辑弹窗位置" Click="WindowEdit_Click" />
                     <CheckBox x:Name="chkSwitch" Content="弹窗" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Click="Switch" />
+                    <CheckBox x:Name="JugStar" Content="星界" Margin="355,77,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>
+                    <CheckBox x:Name="MidStar" Content="星界" Margin="355,106,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>
+                    <CheckBox x:Name="BotStar" Content="星界" Margin="355,134,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>
+                    <CheckBox x:Name="SupStar" Content="星界" Margin="355,163,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>
                 </Grid>
             </TabItem>
         </TabControl>
