@@ -84,10 +84,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Hocy_Hook.cs" />
-    <Compile Include="public_variable.cs" />
-    <Compile Include="TimerUtil.cs" />
-    <Compile Include="WIN32API.cs" />
+    <Compile Include="tools\Hocy_Hook.cs" />
+    <Compile Include="tools\public_variable.cs" />
+    <Compile Include="tools\TimerUtil.cs" />
+    <Compile Include="tools\WIN32API.cs" />
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
