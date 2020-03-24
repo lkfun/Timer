@@ -35,6 +35,13 @@ namespace Timer
             IntPtr pInstance, int threadId);
 
         /// <summary>
+        /// »ñÈ¡ModuleHandle
+        /// </summary>
+        /// <param name="lpModuleName"></param>
+        /// <returns></returns>
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
+        /// <summary>
         /// Ð¶ÔØ¹³×Ó
         /// </summary>
         /// <param name="idHook"></param>

@@ -254,7 +254,8 @@ namespace Timer
 		public bool InstallHook(string flagsinfo)
 		{
             this.flags = flagsinfo;
-            IntPtr pInstance = Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().ManifestModule);
+
+            IntPtr pInstance = Win32API.GetModuleHandle("user32");
            //pInstance = (IntPtr)4194304;
            // IntPtr pInstanc2 = Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly());
            // Assembly.GetExecutingAssembly().GetModules()[0]
