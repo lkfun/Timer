@@ -14,22 +14,62 @@ namespace Timer
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 对位记录时间
+        /// </summary>
         long TopStartTime, JugStartTime, MidStartTime, BotStartTime, SupStartTime, GameStartTime;
+        /// <summary>
+        /// 对位触发器
+        /// </summary>
         DispatcherTimer TopTimer, JugTimer, MidTimer, BotTimer, SupTimer, GameTimer;
-        bool editflag = false;
-        IniData data;
-        private const int FiveSecond = 5000;
-        Window1 flowWindow = new Window1();
+        /// <summary>
+        /// 加减步长 固定五秒
+        /// </summary>
+        private const int stepLength = 5000;
+        /// <summary>
+        /// 复位步长 固定一千秒
+        /// </summary>
+        private const int clearLength = 1000000;
+        /// <summary>
+        /// 弹窗对象
+        /// </summary>
+        Window1 flowWindow;
+        /// <summary>
+        /// 钩子对象
+        /// </summary>
         private Hocy_Hook hook_Main = new Hocy_Hook();
+        /// <summary>
+        /// ini解析对象
+        /// </summary>
         FileIniDataParser parser = new FileIniDataParser();
-        System.EventHandler delegateinstance;
+        /// <summary>
+        /// ini数据对象
+        /// </summary>
+        IniData iniData;
+        /// <summary>
+        /// 从ini文件读出来的对应Key值
+        /// </summary>
+        string TopKey, JugKey, MidKey, BotKey, SupKey, GameKey, SwitchKey, DecimalKey, AddKey, SubtractKey;
+        /// <summary>
+        /// 委托对象，开关弹窗用途
+        /// </summary>
+        System.EventHandler delegateInstance;
+        /// <summary>
+        /// 判断弹窗是否为编辑模式
+        /// </summary>
+        bool editFlag = false;
+        /// <summary>
+        /// 编辑模式的左偏移
+        /// </summary>
+        const double leftOffset = 8;
+        /// <summary>
+        /// 编辑模式的上偏移
+        /// </summary>
+        const double topOffset = 31;
         public MainWindow()
         {
-            data = parser.ReadFile("conf.ini");
             InitializeComponent();
-            Switch(null, null);
-            delegateinstance = new System.EventHandler(WindowEditFun);
-            hook_Main.OnKeyDown += new System.Windows.Forms.KeyEventHandler(Hook_MainKeyDown);
+            #region 多开判断
             //获取当前活动进程的模块名称
             string moduleName = Process.GetCurrentProcess().MainModule.ModuleName;
             //返回指定路径字符串的文件名
@@ -43,7 +83,24 @@ namespace Timer
                 this.Close();//关闭当前窗体
                 return;
             }
-            GameButton_Click(new object(), new RoutedEventArgs());
+            #endregion
+            #region 获取ini文件并读取Key值
+            iniData = parser.ReadFile("conf.ini");
+            if (iniData != null) {
+                TopKey = iniData["key"]["Top"].ToLower();
+                JugKey = iniData["key"]["Jug"].ToLower();
+                MidKey = iniData["key"]["Mid"].ToLower();
+                BotKey = iniData["key"]["Bot"].ToLower();
+                SupKey = iniData["key"]["Sup"].ToLower();
+                SwitchKey = iniData["key"]["Switch"].ToLower();
+                DecimalKey = iniData["key"]["Decimal"].ToLower();
+                AddKey = iniData["key"]["Add"].ToLower();
+                SubtractKey = iniData["key"]["Subtract"].ToLower();
+            }
+            #endregion
+            #region 注册热键
+            delegateInstance = new System.EventHandler(WindowEditFun);
+            hook_Main.OnKeyDown += new System.Windows.Forms.KeyEventHandler(Hook_MainKeyDown);
             try
             {
                 bool flag = hook_Main.InstallHook("1");
@@ -56,47 +113,61 @@ namespace Timer
             {
                 MessageBox.Show(e.Message + " error code:1", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
+            #endregion
+            flowWindow = new Window1();
+            Switch(null, null);//按一下弹窗复选框按钮
+            GameButton_Click(new object(), new RoutedEventArgs());//按一下游戏开始按钮
         }
+        /// <summary>
+        /// 钩子回调函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Hook_MainKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             string key = e.KeyData.ToString().ToLower();
-            if (key == data["key"]["Top"].ToLower())
+            if (key == TopKey)
             {
                 TopButton_Click(null, null);
             }
-            else if (key == data["key"]["Jug"].ToLower())
+            else if (key == JugKey)
             {
                 JugButton_Click(null, null);
             }
-            else if (key == data["key"]["Mid"].ToLower())
+            else if (key == MidKey)
             {
                 MidButton_Click(null, null);
             }
-            else if (key == data["key"]["Bot"].ToLower())
+            else if (key == BotKey)
             {
                 BotButton_Click(null, null);
             }
-            else if (key == data["key"]["Sup"].ToLower())
+            else if (key == SupKey)
             {
                 SupButton_Click(null, null);
             }
-            else if (key == data["key"]["Switch"].ToLower())
+            else if (key == SwitchKey)
             {
                 Switch(null, null);
             }
-            else if (key == data["key"]["Decimal"].ToLower())
+            else if (key == DecimalKey)
             {
                 GameButton_Click(null, null);
             }
-            else if (key == data["key"]["Add"].ToLower())
+            else if (key == AddKey)
             {
                 GameAdd_Click(null, null);
             }
-            else if (key == data["key"]["Subtract"].ToLower())
+            else if (key == SubtractKey)
             {
                 GameSubtract_Click(null, null);
             }
         }
+        /// <summary>
+        /// 切换弹窗事件触发
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Switch(object sender, EventArgs e)
         {
             if (flowWindow.IsVisible)
@@ -109,7 +180,7 @@ namespace Timer
                 if (!flowWindow.IsLoaded)
                 {
                     flowWindow.Close();
-                    flowWindow = new Window1() { Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) };
+                    flowWindow = new Window1() { Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) };
                 }
                 WindowEdit.Visibility = Visibility.Visible;
                 flowWindow.Show();
@@ -140,17 +211,17 @@ namespace Timer
 
         private void TopAdd_Click(object sender, RoutedEventArgs e)
         {
-            TopStartTime += FiveSecond;
+            TopStartTime += stepLength;
         }
 
         private void TopSubtract_Click(object sender, RoutedEventArgs e)
         {
-            TopStartTime -= FiveSecond;
+            TopStartTime -= stepLength;
         }
 
         private void TopClear_Click(object sender, RoutedEventArgs e)
         {
-            TopStartTime -= 1000000;
+            TopStartTime -= clearLength;
         }
 
         /*上单模板 结束*/
@@ -173,17 +244,17 @@ namespace Timer
 
         private void JugAdd_Click(object sender, RoutedEventArgs e)
         {
-            JugStartTime += FiveSecond;
+            JugStartTime += stepLength;
         }
 
         private void JugSubtract_Click(object sender, RoutedEventArgs e)
         {
-            JugStartTime -= FiveSecond;
+            JugStartTime -= stepLength;
         }
 
         private void JugClear_Click(object sender, RoutedEventArgs e)
         {
-            JugStartTime -= 1000000;
+            JugStartTime -= clearLength;
         }
 
 
@@ -206,17 +277,17 @@ namespace Timer
 
         private void MidAdd_Click(object sender, RoutedEventArgs e)
         {
-            MidStartTime += FiveSecond;
+            MidStartTime += stepLength;
         }
 
         private void MidSubtract_Click(object sender, RoutedEventArgs e)
         {
-            MidStartTime -= FiveSecond;
+            MidStartTime -= stepLength;
         }
 
         private void MidClear_Click(object sender, RoutedEventArgs e)
         {
-            MidStartTime -= 1000000;
+            MidStartTime -= clearLength;
         }
 
 
@@ -239,17 +310,17 @@ namespace Timer
 
         private void BotAdd_Click(object sender, RoutedEventArgs e)
         {
-            BotStartTime += FiveSecond;
+            BotStartTime += stepLength;
         }
 
         private void BotSubtract_Click(object sender, RoutedEventArgs e)
         {
-            BotStartTime -= FiveSecond;
+            BotStartTime -= stepLength;
         }
 
         private void BotClear_Click(object sender, RoutedEventArgs e)
         {
-            BotStartTime -= 1000000;
+            BotStartTime -= clearLength;
         }
 
         private void SupButton_Click(object sender, RoutedEventArgs e)
@@ -271,17 +342,17 @@ namespace Timer
 
         private void SupAdd_Click(object sender, RoutedEventArgs e)
         {
-            SupStartTime += FiveSecond;
+            SupStartTime += stepLength;
         }
 
         private void SupSubtract_Click(object sender, RoutedEventArgs e)
         {
-            SupStartTime -= FiveSecond;
+            SupStartTime -= stepLength;
         }
 
         private void SupClear_Click(object sender, RoutedEventArgs e)
         {
-            SupStartTime -= 1000000;
+            SupStartTime -= clearLength;
         }
 
         private void GameButton_Click(object sender, RoutedEventArgs e)
@@ -304,12 +375,12 @@ namespace Timer
 
         private void GameAdd_Click(object sender, RoutedEventArgs e)
         {
-            GameStartTime -= FiveSecond;
+            GameStartTime -= stepLength;
         }
 
         private void GameSubtract_Click(object sender, RoutedEventArgs e)
         {
-            GameStartTime += FiveSecond;
+            GameStartTime += stepLength;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -343,29 +414,27 @@ namespace Timer
 
         private void WindowEdit_Click(object sender, RoutedEventArgs e)
         {
-            editflag = true;
+            editFlag = true;
             WindowEditFun(null, null);
-            editflag = false;
+            editFlag = false;
         }
         private void WindowEditFun(object sender, EventArgs e)
         {
-            const double leftOffset = 8;
-            const double topOffset = 31;
-            if (flowWindow.AllowsTransparency && editflag && flowWindow.IsLoaded)//编辑模式
+            if (flowWindow.AllowsTransparency && editFlag && flowWindow.IsLoaded)//编辑模式
             {
                 flowWindow.Close();
-                flowWindow = new Window1() { AllowsTransparency = false, WindowStyle = WindowStyle.SingleBorderWindow, Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]) - topOffset, Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) - leftOffset };
-                flowWindow.Closed += delegateinstance;
+                flowWindow = new Window1() { AllowsTransparency = false, WindowStyle = WindowStyle.SingleBorderWindow, Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]) - topOffset, Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) - leftOffset };
+                flowWindow.Closed += delegateInstance;
                 flowWindow.Show();
             }
             else if (!flowWindow.AllowsTransparency)
             {
-                data["FlowWindow"]["FlowWindowTop"] = (flowWindow.Top + topOffset).ToString();
-                data["FlowWindow"]["FlowWindowLeft"] = (flowWindow.Left + leftOffset).ToString();
-                parser.WriteFile("conf.ini", data);
-                flowWindow.Closed -= delegateinstance;
+                iniData["FlowWindow"]["FlowWindowTop"] = (flowWindow.Top + topOffset).ToString();
+                iniData["FlowWindow"]["FlowWindowLeft"] = (flowWindow.Left + leftOffset).ToString();
+                parser.WriteFile("conf.ini", iniData);
+                flowWindow.Closed -= delegateInstance;
                 flowWindow.Close();
-                flowWindow = new Window1() { AllowsTransparency = true, WindowStyle = WindowStyle.None, Top = double.Parse(data["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(data["FlowWindow"]["FlowWindowLeft"]) };
+                flowWindow = new Window1() { AllowsTransparency = true, WindowStyle = WindowStyle.None, Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) };
                 flowWindow.Show();
             }
         }

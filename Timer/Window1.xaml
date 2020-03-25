@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="弹窗" Height="241.5" Width="238"
         WindowStyle="None"  AllowsTransparency="True" Background="#00000000" Topmost="True"
-        IsHitTestVisible="True" x:Name="window1" FontWeight="Bold" 
+        IsHitTestVisible="True" x:Name="window1" FontWeight="Bold" ResizeMode="NoResize" 
         >
     <Grid>
         <Label IsHitTestVisible="False" Name="TopTime" Content="就绪" HorizontalAlignment="Left" Margin="46,34,0,0" VerticalAlignment="Top" Background="#4CFF0000"  FontSize="18" Foreground="Yellow" />
