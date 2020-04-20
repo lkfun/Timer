@@ -8,9 +8,9 @@ namespace Timer
     /// <summary>
     /// Window1.xaml 的交互逻辑
     /// </summary>
-    public partial class Window1 : Window
+    public partial class FlowWindow : Window
     {
-        public Window1()
+        public FlowWindow()
         {
             InitializeComponent();
             SourceInitialized += delegate

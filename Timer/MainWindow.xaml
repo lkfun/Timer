@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Timer"
         mc:Ignorable="d"
-        Title="迷之工具箱" Height="385" Width="517.501" FontFamily="Consolas,Microsoft YaHei UI"  FontSize="12
+        Title="迷之工具箱" Height="385" Width="518" FontFamily="Consolas,Microsoft YaHei UI"  FontSize="12
         " ResizeMode="NoResize" Closed="Window_Closed" x:Name="mainwindow" Icon="sanae.ico">
     <Grid>
         <TabControl Margin="10">
@@ -55,7 +55,7 @@
                     <Button x:Name="GameSubtract" Content="-" HorizontalAlignment="Left" Margin="215,14,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="GameSubtract_Click"/>
 
                     <Label Content="小键盘默认快捷键：&#xA;. 重置&#x9;+ 时长&#x9;- 时长&#x9;0 开启/关闭浮窗&#x9;&#xA;F1 上路&#x9;F2 打野&#x9;F3 中路&#x9;F4下路&#x9;F5 辅助" Margin="10,218,10,0" Height="76" VerticalAlignment="Top"/>
-                    <Button Name="WindowEdit" Content="位置编辑" HorizontalAlignment="Left" Margin="59,190,0,0" VerticalAlignment="Top" Width="66" Height="23" ToolTip="编辑弹窗位置" Click="WindowEdit_Click" />
+                    <Button Name="WindowEdit" Content="位置编辑" HorizontalAlignment="Left" Margin="59,190,0,0" VerticalAlignment="Top" Width="66" Height="23" ToolTip="编辑弹窗位置" Click="WindowEditFun" />
                     <CheckBox x:Name="chkSwitch" Content="弹窗" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Click="Switch" />
                     <CheckBox x:Name="JugStar" Content="星界" Margin="355,77,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>
                     <CheckBox x:Name="MidStar" Content="星界" Margin="355,106,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>

@@ -33,7 +33,7 @@ namespace Timer
         /// <summary>
         /// 弹窗对象
         /// </summary>
-        Window1 flowWindow;
+        FlowWindow flowWindow;
         /// <summary>
         /// 钩子对象
         /// </summary>
@@ -55,17 +55,13 @@ namespace Timer
         /// </summary>
         System.EventHandler delegateInstance;
         /// <summary>
-        /// 判断弹窗是否为编辑模式
-        /// </summary>
-        bool editFlag = false;
-        /// <summary>
         /// 编辑模式的左偏移
         /// </summary>
-        const double leftOffset = 8;
+        const double leftOffset = 3;
         /// <summary>
         /// 编辑模式的上偏移
         /// </summary>
-        const double topOffset = 31;
+        const double topOffset = 26;
         public MainWindow()
         {
             InitializeComponent();
@@ -114,7 +110,7 @@ namespace Timer
                 MessageBox.Show(e.Message + " error code:1", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
             #endregion
-            flowWindow = new Window1();
+            flowWindow = new FlowWindow();
             Switch(null, null);//按一下弹窗复选框按钮
             GameButton_Click(new object(), new RoutedEventArgs());//按一下游戏开始按钮
         }
@@ -180,7 +176,7 @@ namespace Timer
                 if (!flowWindow.IsLoaded)
                 {
                     flowWindow.Close();
-                    flowWindow = new Window1() { Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) };
+                    flowWindow = new FlowWindow() { Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) };
                 }
                 WindowEdit.Visibility = Visibility.Visible;
                 flowWindow.Show();
@@ -412,18 +408,12 @@ namespace Timer
             }
         }
 
-        private void WindowEdit_Click(object sender, RoutedEventArgs e)
-        {
-            editFlag = true;
-            WindowEditFun(null, null);
-            editFlag = false;
-        }
         private void WindowEditFun(object sender, EventArgs e)
         {
-            if (flowWindow.AllowsTransparency && editFlag && flowWindow.IsLoaded)//编辑模式
+            if (flowWindow.AllowsTransparency && e != EventArgs.Empty && flowWindow.IsLoaded)//编辑模式
             {
                 flowWindow.Close();
-                flowWindow = new Window1() { AllowsTransparency = false, WindowStyle = WindowStyle.SingleBorderWindow, Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]) - topOffset, Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) - leftOffset };
+                flowWindow = new FlowWindow() { AllowsTransparency = false, WindowStyle = WindowStyle.SingleBorderWindow, Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]) - topOffset, Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) - leftOffset };
                 flowWindow.Closed += delegateInstance;
                 flowWindow.Show();
             }
@@ -434,7 +424,7 @@ namespace Timer
                 parser.WriteFile("conf.ini", iniData);
                 flowWindow.Closed -= delegateInstance;
                 flowWindow.Close();
-                flowWindow = new Window1() { AllowsTransparency = true, WindowStyle = WindowStyle.None, Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) };
+                flowWindow = new FlowWindow() { AllowsTransparency = true, WindowStyle = WindowStyle.None, Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) };
                 flowWindow.Show();
             }
         }
