@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using IniParser;
 using IniParser.Model;
 using Timer;
+using System.Speech.Synthesis;
 
 namespace Timer
 {
@@ -54,6 +55,8 @@ namespace Timer
         /// 委托对象，开关弹窗用途
         /// </summary>
         System.EventHandler delegateInstance;
+
+        SpeechSynthesizer voice;
         /// <summary>
         /// 编辑模式的左偏移
         /// </summary>
@@ -82,7 +85,8 @@ namespace Timer
             #endregion
             #region 获取ini文件并读取Key值
             iniData = parser.ReadFile("conf.ini");
-            if (iniData != null) {
+            if (iniData != null)
+            {
                 TopKey = iniData["key"]["Top"].ToLower();
                 JugKey = iniData["key"]["Jug"].ToLower();
                 MidKey = iniData["key"]["Mid"].ToLower();
@@ -113,6 +117,7 @@ namespace Timer
             flowWindow = new FlowWindow();
             Switch(null, null);//按一下弹窗复选框按钮
             GameButton_Click(new object(), new RoutedEventArgs());//按一下游戏开始按钮
+            voice = new SpeechSynthesizer { Volume = 100 };
         }
         /// <summary>
         /// 钩子回调函数
@@ -208,6 +213,10 @@ namespace Timer
             Top.Content = TimerUtil.ChangeTimeContent(TopStartTime, GameStartTime, (bool)TopBoot.IsChecked, (bool)TopStar.IsChecked, out isReady);
             if (isReady)
             {
+                if ((bool)chkVoice.IsChecked)
+                {
+                    voice.SpeakAsync("上路闪现好了");
+                }
                 TopTimer.Stop();
             }
             flowWindow.TopTime.Content = Top.Content;
@@ -251,6 +260,10 @@ namespace Timer
             Jug.Content = TimerUtil.ChangeTimeContent(JugStartTime, GameStartTime, (bool)JugBoot.IsChecked, (bool)JugStar.IsChecked, out isReady);
             if (isReady)
             {
+                if ((bool)chkVoice.IsChecked)
+                {
+                    voice.SpeakAsync("打野闪现好了");
+                }
                 JugTimer.Stop();
             }
             flowWindow.JugTime.Content = Jug.Content;
@@ -274,7 +287,8 @@ namespace Timer
 
         private void MidButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MidTimer != null) {
+            if (MidTimer != null)
+            {
                 MidTimer.Stop();
             }
             MidTimer = new DispatcherTimer
@@ -292,6 +306,10 @@ namespace Timer
             Mid.Content = TimerUtil.ChangeTimeContent(MidStartTime, GameStartTime, (bool)MidBoot.IsChecked, (bool)MidStar.IsChecked, out isReady);
             if (isReady)
             {
+                if ((bool)chkVoice.IsChecked)
+                {
+                    voice.SpeakAsync("中路闪现好了");
+                }
                 MidTimer.Stop();
             }
             flowWindow.MidTime.Content = Mid.Content;
@@ -334,6 +352,10 @@ namespace Timer
             Bot.Content = TimerUtil.ChangeTimeContent(BotStartTime, GameStartTime, (bool)BotBoot.IsChecked, (bool)BotStar.IsChecked, out isReady);
             if (isReady)
             {
+                if ((bool)chkVoice.IsChecked)
+                {
+                    voice.SpeakAsync("下路闪现好了");
+                }
                 BotTimer.Stop();
             }
             flowWindow.BotTime.Content = Bot.Content;
@@ -375,6 +397,10 @@ namespace Timer
             Sup.Content = TimerUtil.ChangeTimeContent(SupStartTime, GameStartTime, (bool)SupBoot.IsChecked, (bool)SupStar.IsChecked, out isReady);
             if (isReady)
             {
+                if ((bool)chkVoice.IsChecked)
+                {
+                    voice.SpeakAsync("辅佐闪现好了");
+                }
                 SupTimer.Stop();
             }
             flowWindow.SupTime.Content = Sup.Content;
@@ -397,7 +423,8 @@ namespace Timer
 
         private void GameButton_Click(object sender, RoutedEventArgs e)
         {
-            if (GameTimer != null) {
+            if (GameTimer != null)
+            {
                 GameTimer.Stop();
             }
             TopStartTime = JugStartTime = MidStartTime = BotStartTime = SupStartTime = 0;
@@ -464,6 +491,15 @@ namespace Timer
                 flowWindow = new FlowWindow() { AllowsTransparency = true, WindowStyle = WindowStyle.None, Top = double.Parse(iniData["FlowWindow"]["FlowWindowTop"]), Left = double.Parse(iniData["FlowWindow"]["FlowWindowLeft"]) };
                 flowWindow.Show();
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            voice.SpeakAsync("测试");
+            voice.SpeakAsync("测试");
+            voice.SpeakAsync("测试");
+            voice.SpeakAsync("测试");
+            voice.SpeakAsync("测试");
         }
 
     }
