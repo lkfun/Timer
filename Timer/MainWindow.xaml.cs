@@ -189,6 +189,10 @@ namespace Timer
         /*上单模板 开始*/
         private void TopButton_Click(object sender, RoutedEventArgs e)
         {
+            if (TopTimer != null)
+            {
+                TopTimer.Stop();
+            }
             TopTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
@@ -200,7 +204,12 @@ namespace Timer
 
         private void Toptimer_Tick(object sender, EventArgs e)
         {
-            Top.Content = TimerUtil.ChangeTimeContent(TopStartTime, GameStartTime, (bool)TopBoot.IsChecked, (bool)TopStar.IsChecked);
+            bool isReady = true;
+            Top.Content = TimerUtil.ChangeTimeContent(TopStartTime, GameStartTime, (bool)TopBoot.IsChecked, (bool)TopStar.IsChecked, out isReady);
+            if (isReady)
+            {
+                TopTimer.Stop();
+            }
             flowWindow.TopTime.Content = Top.Content;
         }
 
@@ -223,6 +232,10 @@ namespace Timer
         /*上单模板 结束*/
         private void JugButton_Click(object sender, RoutedEventArgs e)
         {
+            if (JugTimer != null)
+            {
+                JugTimer.Stop();
+            }
             JugTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
@@ -234,7 +247,12 @@ namespace Timer
 
         private void Jugtimer_Tick(object sender, EventArgs e)
         {
-            Jug.Content = TimerUtil.ChangeTimeContent(JugStartTime, GameStartTime, (bool)JugBoot.IsChecked, (bool)JugStar.IsChecked);
+            bool isReady = true;
+            Jug.Content = TimerUtil.ChangeTimeContent(JugStartTime, GameStartTime, (bool)JugBoot.IsChecked, (bool)JugStar.IsChecked, out isReady);
+            if (isReady)
+            {
+                JugTimer.Stop();
+            }
             flowWindow.JugTime.Content = Jug.Content;
         }
 
@@ -256,6 +274,9 @@ namespace Timer
 
         private void MidButton_Click(object sender, RoutedEventArgs e)
         {
+            if (MidTimer != null) {
+                MidTimer.Stop();
+            }
             MidTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
@@ -267,7 +288,12 @@ namespace Timer
 
         private void Midtimer_Tick(object sender, EventArgs e)
         {
-            Mid.Content = TimerUtil.ChangeTimeContent(MidStartTime, GameStartTime, (bool)MidBoot.IsChecked, (bool)MidStar.IsChecked);
+            bool isReady = true;
+            Mid.Content = TimerUtil.ChangeTimeContent(MidStartTime, GameStartTime, (bool)MidBoot.IsChecked, (bool)MidStar.IsChecked, out isReady);
+            if (isReady)
+            {
+                MidTimer.Stop();
+            }
             flowWindow.MidTime.Content = Mid.Content;
         }
 
@@ -289,6 +315,10 @@ namespace Timer
 
         private void BotButton_Click(object sender, RoutedEventArgs e)
         {
+            if (BotTimer != null)
+            {
+                BotTimer.Stop();
+            }
             BotTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
@@ -300,7 +330,12 @@ namespace Timer
 
         private void Bottimer_Tick(object sender, EventArgs e)
         {
-            Bot.Content = TimerUtil.ChangeTimeContent(BotStartTime, GameStartTime, (bool)BotBoot.IsChecked, (bool)BotStar.IsChecked);
+            bool isReady = true;
+            Bot.Content = TimerUtil.ChangeTimeContent(BotStartTime, GameStartTime, (bool)BotBoot.IsChecked, (bool)BotStar.IsChecked, out isReady);
+            if (isReady)
+            {
+                BotTimer.Stop();
+            }
             flowWindow.BotTime.Content = Bot.Content;
         }
 
@@ -321,6 +356,10 @@ namespace Timer
 
         private void SupButton_Click(object sender, RoutedEventArgs e)
         {
+            if (SupTimer != null)
+            {
+                SupTimer.Stop();
+            }
             SupTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(100)
@@ -332,7 +371,12 @@ namespace Timer
 
         private void Suptimer_Tick(object sender, EventArgs e)
         {
-            Sup.Content = TimerUtil.ChangeTimeContent(SupStartTime, GameStartTime, (bool)SupBoot.IsChecked, (bool)SupStar.IsChecked);
+            bool isReady = true;
+            Sup.Content = TimerUtil.ChangeTimeContent(SupStartTime, GameStartTime, (bool)SupBoot.IsChecked, (bool)SupStar.IsChecked, out isReady);
+            if (isReady)
+            {
+                SupTimer.Stop();
+            }
             flowWindow.SupTime.Content = Sup.Content;
         }
 
@@ -353,6 +397,9 @@ namespace Timer
 
         private void GameButton_Click(object sender, RoutedEventArgs e)
         {
+            if (GameTimer != null) {
+                GameTimer.Stop();
+            }
             TopStartTime = JugStartTime = MidStartTime = BotStartTime = SupStartTime = 0;
             GameTimer = new DispatcherTimer
             {
@@ -391,16 +438,6 @@ namespace Timer
                 if (SupTimer != null) { SupTimer.Stop(); }
                 if (GameTimer != null) { GameTimer.Stop(); }
                 this.hook_Main.UnInstallHook();
-                //获取当前活动进程的模块名称
-                string moduleName = Process.GetCurrentProcess().MainModule.ModuleName;
-                //返回指定路径字符串的文件名
-                string processName = System.IO.Path.GetFileNameWithoutExtension(moduleName);
-                //根据文件名创建进程资源数组
-                Process[] processes = Process.GetProcessesByName(processName);
-                foreach (var process in processes)
-                {
-                    process.Close();
-                }
             }
             catch (Exception e2)
             {

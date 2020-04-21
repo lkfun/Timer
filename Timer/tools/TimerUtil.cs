@@ -14,6 +14,11 @@ namespace Timer
             string content = (timespan / 60).ToString().PadLeft(2, '0') + ":" + (timespan % 60).ToString().PadLeft(2, '0');
             return content;
         }
+        public static string ChangeTimeContent(long StartTime, long GameStartTime, bool BootIsChecked, bool StarIsChecked,out bool isReady) {
+            string content = ChangeTimeContent(StartTime, GameStartTime, BootIsChecked, StarIsChecked);
+            isReady = (content == "就绪")? true:false;
+            return content;
+        }
 
         public static string ChangeTimeContent(long StartTime, long GameStartTime, bool BootIsChecked, bool StarIsChecked)
         {
