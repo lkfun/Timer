@@ -126,6 +126,7 @@ namespace Timer
         /// <param name="e"></param>
         private void Hook_MainKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
+            if (!(bool)chkEnableKey.IsChecked) return;
             string key = e.KeyData.ToString().ToLower();
             if (key == TopKey)
             {
@@ -492,16 +493,5 @@ namespace Timer
                 flowWindow.Show();
             }
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            voice.SpeakAsync("测试");
-            voice.SpeakAsync("测试");
-            voice.SpeakAsync("测试");
-            voice.SpeakAsync("测试");
-            voice.SpeakAsync("测试");
-        }
-
     }
-
 }

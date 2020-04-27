@@ -62,7 +62,7 @@
                     <CheckBox x:Name="BotStar" Content="星界" Margin="375,134,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>
                     <CheckBox x:Name="SupStar" Content="星界" Margin="375,163,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="56"/>
                     <CheckBox x:Name="chkVoice" Content="语音播放" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" />
-
+                    <CheckBox x:Name="chkEnableKey" Content="快捷键" HorizontalAlignment="Left" Margin="100,195,0,0" VerticalAlignment="Top" IsChecked="True" />
                 </Grid>
             </TabItem>
         </TabControl>
