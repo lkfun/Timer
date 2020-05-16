@@ -260,16 +260,6 @@ namespace Timer
            // IntPtr pInstanc2 = Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly());
            // Assembly.GetExecutingAssembly().GetModules()[0]
 			// 假如没有安装鼠标钩子
-			if ( this.m_pMouseHook == IntPtr.Zero )
-			{
-				this.m_MouseHookProcedure = new HookProc( this.MouseHookProc );
-				this.m_pMouseHook = Win32API.SetWindowsHookEx( WH_Codes.WH_MOUSE_LL,this.m_MouseHookProcedure, pInstance, 0 );
-				if ( this.m_pMouseHook == IntPtr.Zero )
-				{
-					this.UnInstallHook();
-					return false;
-				}
-			}
 			if ( this.m_pKeyboardHook == IntPtr.Zero )
 			{
 				this.m_KeyboardHookProcedure = new HookProc( this.KeyboardHookProc );
