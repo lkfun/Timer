@@ -21,8 +21,24 @@
             <Setter Property="Control.Background" Value="#FF4F87C0"/>
             <Setter Property="Control.BorderBrush" Value="#FF4F87C0"/>
         </Style>
-        <Style x:Key="BottonStyle" BasedOn="{StaticResource BaseBottonStyle}">
+        <Style x:Key="BottonStyle" BasedOn="{StaticResource BaseBottonStyle}" TargetType="Button">
             <Setter Property="Control.Width" Value="100"/>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="LableStyle" BasedOn="{StaticResource BaseStyle}">
@@ -38,7 +54,7 @@
                 <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Border>
         </ControlTemplate>
-        <Style x:Key="myStyle" TargetType="Button">
+        <Style x:Key="myStyle" TargetType="Button" BasedOn="{StaticResource BottonStyle}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -51,6 +67,64 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        
+        <LinearGradientBrush x:Key="LinearGradientBlueBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+            
+            <GradientStop Color="#FF377FED" Offset="0" />
+            
+            <GradientStop Color="#FF074CC0" Offset="1" />
+            
+        </LinearGradientBrush>
+        
+        <SolidColorBrush x:Key="MyBtnBorderColor" Color="#FF2D78F4"></SolidColorBrush>
+        
+        <SolidColorBrush x:Key="MyBtnHoverBackgroundColor" Color="#FF317EF3"></SolidColorBrush>
+
+
+        <Style x:Key="FilletButton" TargetType="{x:Type Button}" >
+
+            <Setter Property="Background" Value="{StaticResource LinearGradientBlueBackground}"></Setter>
+
+            <Setter Property="Foreground" Value="White"></Setter>
+
+            <Setter Property="BorderBrush" Value="{StaticResource MyBtnBorderColor}"></Setter>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="{x:Type Button}">
+
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" 
+                                 SnapsToDevicePixels="true" CornerRadius="6,6,6,6">
+
+                            <ContentPresenter x:Name="contentPresenter" 
+                                               Focusable="False" 
+                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                               Margin="{TemplateBinding Padding}" 
+                                               RecognizesAccessKey="True" 
+                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  />
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="true">
+
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource MyBtnHoverBackgroundColor}"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
         </Style>
     </Window.Resources>
 
